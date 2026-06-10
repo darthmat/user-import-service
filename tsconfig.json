@@ -1,0 +1,24 @@
+{
+  "extends": "@tsconfig/node24",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+
+    "sourceMap": true,
+    "inlineSources": true,
+    "esModuleInterop": true,
+    "sourceRoot": "/app",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "noUncheckedIndexedAccess": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

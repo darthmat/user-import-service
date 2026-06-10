@@ -1,0 +1,14 @@
+.git*
+.vscode
+.husky
+.nx
+**/dist
+**/docs
+k8s
+**/node_modules
+CODEOWNERS
+Dockerfile
+gitlab-oidc-token-*
+gcp-creds-*
+.npmrc
+**/*.tsbuildinfo
