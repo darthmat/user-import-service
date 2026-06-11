@@ -8,7 +8,7 @@ export const initialMigration: Migration = {
   async up(db) {
     await db.schema
       .createTable('users')
-      .addColumn('id', 'uuid', (col) => col.notNull())
+      .addColumn('id', 'uuid', (col) => col.primaryKey().notNull())
       .addColumn('username', 'text', (col) => col.notNull().unique())
       .addColumn('email', 'text', (col) => col.notNull().unique())
       .addColumn('created_at', 'timestamptz', (col) =>
