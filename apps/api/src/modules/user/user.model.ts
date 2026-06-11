@@ -1,4 +1,4 @@
-import { ValidationError } from '@/utils/errors.js';
+import { ValidationError } from '../../utils/errors';
 import { UserCreateDto } from './user.dto';
 import { uuidv7 } from 'uuidv7';
 

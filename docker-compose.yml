@@ -1,5 +1,6 @@
 services:
   app:
+    command: sh -c "node apps/api/dist/infra/database/migration.js && node apps/api/dist/main.js"
     build:
       context: .
       dockerfile: apps/api/Dockerfile
