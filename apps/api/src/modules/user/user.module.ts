@@ -1,17 +1,17 @@
-import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
 import { config } from '@/config';
-import { IUserRepository } from './user-repository.interface';
 import { createDatabase } from '@/infra/database/db';
+import { Module } from '@nestjs/common';
+import { UserRepositoryPort } from './user-repository.port';
+import { UserServicePort } from './user-service.port';
+import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
-import { IUserService } from './user-service.interface';
+import { UserService } from './user.service';
 
 @Module({
   controllers: [UserController],
   providers: [
     {
-      provide: IUserRepository,
+      provide: UserRepositoryPort,
       useFactory: () => {
         const db = createDatabase(config.database);
         const userRepository = new UserRepository(db);
@@ -19,11 +19,11 @@ import { IUserService } from './user-service.interface';
       },
     },
     {
-      provide: IUserService,
-      useFactory: (userRepository: IUserRepository) => {
+      provide: UserServicePort,
+      useFactory: (userRepository: UserRepositoryPort) => {
         return new UserService(userRepository);
       },
-      inject: [IUserRepository],
+      inject: [UserRepositoryPort],
     },
   ],
 })

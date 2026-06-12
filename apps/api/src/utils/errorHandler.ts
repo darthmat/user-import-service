@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import type { FastifyReply } from 'fastify';
 import {
+  ConflictException,
   EntityNotFoundError,
   InternalError,
   UnavailableServiceError,
@@ -50,6 +51,12 @@ export class CustomErrorHandlerFilter implements ExceptionFilter {
         .status(HttpStatus.BAD_REQUEST)
         .send({ message: exception.message });
       return;
+    }
+
+    if (exception instanceof ConflictException) {
+      void response
+        .status(HttpStatus.CONFLICT)
+        .send({ message: exception.message });
     }
 
     void response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({

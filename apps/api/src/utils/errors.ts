@@ -34,3 +34,10 @@ export class ValidationError extends Error {
     this.name = 'ValidationError';
   }
 }
+
+export class ConflictException extends Error {
+  constructor(readonly error: string) {
+    super(`Conflict: ${error}`);
+    this.name = 'ConflictException';
+  }
+}
