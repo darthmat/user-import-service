@@ -8,7 +8,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
 
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
-    pnpm install --frozen-lockfile --filter @user-import-service/api
+    pnpm install --frozen-lockfile --ignore-scripts --filter @user-import-service/api
 
 COPY apps/api ./apps/api
 
@@ -27,7 +27,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
 
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
-    pnpm install --prod --frozen-lockfile --filter @user-import-service/api
+    pnpm install --prod --frozen-lockfile --ignore-scripts --filter @user-import-service/api
 
 COPY --from=base /app/apps/api/dist ./apps/api/dist
 
