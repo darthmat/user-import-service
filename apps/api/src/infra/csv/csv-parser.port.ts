@@ -1,5 +1,5 @@
 export interface ParserOptions {
-  delimiter?: string;
+  delimiter: string;
   validateHeaders?: (headers: string[]) => void;
 }
 

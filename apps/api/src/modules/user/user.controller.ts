@@ -5,7 +5,6 @@ import {
 import { MultipartValue } from '@fastify/multipart';
 import { Body, Controller, Inject, Post, Request } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import { delimiter } from 'path';
 import { UserImportServicePort } from './user-import/user-import.port';
 import { UserServicePort } from './user-service.port';
 import { UserCreateDto } from './user.dto';
@@ -42,6 +41,6 @@ export class UserController {
 
     const buffer = await data.toBuffer();
 
-    return await this.userImportService.import(buffer, delimiter);
+    return await this.userImportService.import(buffer, delimiterField.value);
   }
 }

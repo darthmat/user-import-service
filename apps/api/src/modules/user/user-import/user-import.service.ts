@@ -23,7 +23,7 @@ export class UserImportService implements UserImportServicePort {
     private readonly userRepository: UserRepositoryPort,
   ) {}
 
-  async import(buffer: Buffer, delimiter: string): Promise<ImportResult> {
+  async import(buffer: Buffer, delimiter = ','): Promise<ImportResult> {
     const rows = await this.parseCsv(buffer, delimiter);
     const { succeeded, failed } = this.buildUsers(rows);
     const savedIds = await this.persistUsers(succeeded);

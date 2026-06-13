@@ -12,7 +12,7 @@ export class FastCsvParser<T extends object> extends CsvParserPort<T> {
 
       const csvStream = parseStream<T, T>(Readable.from(buffer), {
         headers: true,
-        delimiter: options.delimiter ?? ',',
+        delimiter: options.delimiter,
         trim: true,
         ignoreEmpty: true,
       });
@@ -23,7 +23,7 @@ export class FastCsvParser<T extends object> extends CsvParserPort<T> {
         } catch (error) {
           csvStream.destroy(
             headers.length === 1
-              ? new DelimiterMismatchException(options.delimiter ?? ',')
+              ? new DelimiterMismatchException(options.delimiter)
               : new CsvParserException('Invalid headers', { cause: error }),
           );
         }
