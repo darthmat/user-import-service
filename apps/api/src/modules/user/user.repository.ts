@@ -20,4 +20,28 @@ export class UserRepository implements UserRepositoryPort {
 
     return !!result;
   }
+
+  async saveMany(users: User[]): Promise<{ savedIds: Set<string> }> {
+    if (!users.length) {
+      return { savedIds: new Set() };
+    }
+
+    const result = await this.db
+      .insertInto('users')
+      .values(
+        users.map((user) => ({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          created_at: user.createdAt,
+        })),
+      )
+      .onConflict((oc) => oc.doNothing())
+      .returning('id')
+      .execute();
+
+    const savedIds = new Set<string>(result.map((r) => r.id));
+
+    return { savedIds };
+  }
 }
