@@ -10,7 +10,9 @@ import {
   ConflictException,
   CsvTooLargeException,
   DelimiterMismatchException,
+  DelimiterRequiredException,
   EntityNotFoundError,
+  FileRequiredException,
   InternalError,
   UnavailableServiceError,
   ValidationError,
@@ -71,6 +73,16 @@ export class CustomErrorHandlerFilter implements ExceptionFilter {
     if (exception instanceof CsvTooLargeException) {
       void response
         .status(HttpStatus.PAYLOAD_TOO_LARGE)
+        .send({ message: exception.message });
+      return;
+    }
+
+    if (
+      exception instanceof FileRequiredException ||
+      exception instanceof DelimiterRequiredException
+    ) {
+      void response
+        .status(HttpStatus.BAD_REQUEST)
         .send({ message: exception.message });
       return;
     }

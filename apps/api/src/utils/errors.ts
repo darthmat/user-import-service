@@ -61,3 +61,17 @@ export class CsvTooLargeException extends CsvParserException {
     super(`File contains ${rowCount} rows, maximum is ${maxRows}`);
   }
 }
+
+export class FileRequiredException extends Error {
+  constructor() {
+    super('File is required');
+    this.name = 'FileRequiredException';
+  }
+}
+
+export class DelimiterRequiredException extends Error {
+  constructor() {
+    super('Delimiter field is required');
+    this.name = 'DelimiterRequiredException';
+  }
+}
