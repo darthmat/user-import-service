@@ -41,3 +41,17 @@ export class ConflictException extends Error {
     this.name = 'ConflictException';
   }
 }
+
+export class CsvParserException extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = 'CsvParserException';
+  }
+}
+
+export class DelimiterMismatchException extends CsvParserException {
+  constructor(delimiter: string) {
+    super(`File content does not match the provided delimiter: '${delimiter}'`);
+    this.name = 'DelimiterMismatchException';
+  }
+}
