@@ -1,6 +1,10 @@
 import { config } from '@/config';
+import { FastCsvParser } from '@/infra/csv';
+import { CsvParserPort } from '@/infra/csv/csv-parser.port';
 import { createDatabase } from '@/infra/database/db';
 import { Module } from '@nestjs/common';
+import { UserImportServicePort } from './user-import/user-import.port';
+import { UserImportService } from './user-import/user-import.service';
 import { UserRepositoryPort } from './user-repository.port';
 import { UserServicePort } from './user-service.port';
 import { UserController } from './user.controller';
@@ -14,9 +18,12 @@ import { UserService } from './user.service';
       provide: UserRepositoryPort,
       useFactory: () => {
         const db = createDatabase(config.database);
-        const userRepository = new UserRepository(db);
-        return userRepository;
+        return new UserRepository(db);
       },
+    },
+    {
+      provide: CsvParserPort,
+      useFactory: () => new FastCsvParser(),
     },
     {
       provide: UserServicePort,
@@ -24,6 +31,16 @@ import { UserService } from './user.service';
         return new UserService(userRepository);
       },
       inject: [UserRepositoryPort],
+    },
+    {
+      provide: UserImportServicePort,
+      useFactory: (
+        userRepository: UserRepositoryPort,
+        csvParser: CsvParserPort<Record<string, string>>,
+      ) => {
+        return new UserImportService(csvParser, userRepository);
+      },
+      inject: [UserRepositoryPort, CsvParserPort],
     },
   ],
 })
