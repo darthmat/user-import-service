@@ -2,9 +2,8 @@
   "name": "user-import-service",
   "private": true,
   "scripts": {
-    "dev:api": "pnpm --filter api dev",
-    "dev:web": "pnpm --filter web dev",
-    "test:api": "pnpm --filter api test",
-    "test:api:e2e": "pnpm --filter api test:e2e"
+    "dev:api": "pnpm --filter @user-import-service/api start:dev",
+    "dev:web": "pnpm --filter @user-import-service/web dev",
+    "test:api": "pnpm --filter @user-import-service/api test"
   }
 }
