@@ -21,7 +21,6 @@
     "migrations": "tsx --env-file=.env src/infra/database/migration.ts"
   },
   "dependencies": {
-    "@blazity/nest-file-fastify": "^1.0.0",
     "@fast-csv/parse": "^5.0.7",
     "@fastify/multipart": "^10.0.0",
     "@nestjs/common": "^11.0.1",

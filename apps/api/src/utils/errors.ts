@@ -55,3 +55,9 @@ export class DelimiterMismatchException extends CsvParserException {
     this.name = 'DelimiterMismatchException';
   }
 }
+
+export class CsvTooLargeException extends CsvParserException {
+  constructor(rowCount: number, maxRows: number) {
+    super(`File contains ${rowCount} rows, maximum is ${maxRows}`);
+  }
+}

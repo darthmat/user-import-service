@@ -8,6 +8,8 @@ import {
 import type { FastifyReply } from 'fastify';
 import {
   ConflictException,
+  CsvTooLargeException,
+  DelimiterMismatchException,
   EntityNotFoundError,
   InternalError,
   UnavailableServiceError,
@@ -57,6 +59,20 @@ export class CustomErrorHandlerFilter implements ExceptionFilter {
       void response
         .status(HttpStatus.CONFLICT)
         .send({ message: exception.message });
+    }
+
+    if (exception instanceof DelimiterMismatchException) {
+      void response
+        .status(HttpStatus.UNPROCESSABLE_ENTITY)
+        .send({ message: exception.message });
+      return;
+    }
+
+    if (exception instanceof CsvTooLargeException) {
+      void response
+        .status(HttpStatus.PAYLOAD_TOO_LARGE)
+        .send({ message: exception.message });
+      return;
     }
 
     void response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({

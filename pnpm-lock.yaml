@@ -10,9 +10,6 @@ importers:
 
   apps/api:
     dependencies:
-      '@blazity/nest-file-fastify':
-        specifier: ^1.0.0
-        version: 1.0.0
       '@fast-csv/parse':
         specifier: ^5.0.7
         version: 5.0.7
@@ -195,9 +192,6 @@ packages:
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
     engines: {node: '>=18'}
-
-  '@blazity/nest-file-fastify@1.0.0':
-    resolution: {integrity: sha512-Vs3AzEd5/JgT6eakn1pvwV3PeYZCFKpsNglwIqE/U9vLQQSrGpEuMuGUa7263d9X9od3KVrDHJ0n7ouMSzFQUA==}
 
   '@borewit/text-codec@0.2.2':
     resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
@@ -3051,8 +3045,6 @@ snapshots:
   '@balena/dockerignore@1.0.2': {}
 
   '@bcoe/v8-coverage@1.0.2': {}
-
-  '@blazity/nest-file-fastify@1.0.0': {}
 
   '@borewit/text-codec@0.2.2': {}
 

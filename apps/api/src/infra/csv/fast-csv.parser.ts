@@ -6,7 +6,7 @@ import { CsvParserPort, ParserOptions } from './csv-parser.port';
 
 @Injectable()
 export class FastCsvParser<T extends object> extends CsvParserPort<T> {
-  parse(buffer: Buffer, options: ParserOptions<T>): Promise<T[]> {
+  parse(buffer: Buffer, options: ParserOptions): Promise<T[]> {
     return new Promise((resolve, reject) => {
       const rows: T[] = [];
 
@@ -34,7 +34,9 @@ export class FastCsvParser<T extends object> extends CsvParserPort<T> {
         .on('end', () => {
           resolve(rows);
         })
-        .on('error', reject);
+        .on('error', (err) => {
+          reject(err);
+        });
     });
   }
 }
