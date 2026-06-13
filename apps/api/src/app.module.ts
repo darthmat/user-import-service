@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core/constants';
 import { HealthzController } from './modules/healtz/healthz.controller';
-import { CustomErrorHandlerFilter } from './utils/errorHandler';
 import { UserModule } from './modules/user/user.module';
+import { CustomErrorHandlerFilter } from './utils/errorHandler';
 
 @Module({
   imports: [UserModule],

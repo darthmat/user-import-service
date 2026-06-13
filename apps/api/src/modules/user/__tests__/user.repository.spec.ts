@@ -1,8 +1,8 @@
 import { withDatabase } from '@/infra/database/__utils__';
+import { uuidv7 } from 'uuidv7';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UserRepository } from '../user.repository';
 import { createFakeUser } from './__utils__';
-import { uuidv7 } from 'uuidv7';
 
 describe('UserRepository', () => {
   let repository: UserRepository;

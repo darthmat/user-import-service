@@ -1,7 +1,7 @@
 import { ConflictException } from '@/utils/errors';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { UserService } from '../user.service';
 import { FakeUserRepository } from '../user-repository.fake';
+import { UserService } from '../user.service';
 
 describe('UserService', () => {
   let repository: FakeUserRepository;

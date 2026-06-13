@@ -1,6 +1,6 @@
+import { CsvParserException, DelimiterMismatchException } from '@/utils/errors';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { FastCsvParser } from './fast-csv.parser';
-import { DelimiterMismatchException, CsvParserException } from '@/utils/errors';
 
 describe('FastCsvParser', () => {
   let parser: FastCsvParser<Record<string, string>>;

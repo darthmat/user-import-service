@@ -1,6 +1,6 @@
 import { ValidationError } from '@/utils/errors';
-import { UserCreateDto } from './user.dto';
 import { uuidv7 } from 'uuidv7';
+import { UserCreateDto } from './user.dto';
 
 export class User {
   readonly id: string;

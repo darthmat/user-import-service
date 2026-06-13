@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Kysely, Generated } from 'kysely';
+import { Generated, Kysely } from 'kysely';
 
 export type Database = Kysely<UserImportServiceDatabaseTables>;
 
