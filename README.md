@@ -136,7 +136,7 @@ failed. Server-side errors surface as toasts.
   the `create()`/`fromData()` factory methods described below.
 
 ```bash
-pnpm test
+pnpm test:api
 ```
 
 ---
