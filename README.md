@@ -106,9 +106,12 @@ A few things worth calling out specifically:
   `users` table is `id` (UUIDv7), `username` and `email` (both unique), and
   `created_at`.
 
-On the frontend: Next.js App Router, a thin BFF layer with a single fetch
-client (`customFetch`, kept separate so it's easy to mock later), server
-actions for both forms, and shadcn/Tailwind for the UI. There are three main
+On the frontend: Next.js App Router, a thin BFF layer
+(`UserServiceImpl`) with server actions for both forms, and shadcn/Tailwind
+for the UI. The service takes `fetch` as a constructor parameter with a
+default value (`customFetch = fetch`) — nothing actually overrides it today,
+but it means the HTTP client can be swapped for a mock in tests without
+mocking the global `fetch` or any modules. There are three main
 pieces: a single-user creation form, a CSV upload form (with delimiter
 selection), and a results table showing which rows succeeded and which
 failed. Server-side errors surface as toasts.
@@ -119,12 +122,18 @@ failed. Server-side errors surface as toasts.
 
 - **Unit tests** on the services, using a fake repository built on a `Map`
   instead of mocks — this keeps the tests close to "real" behaviour without
-  needing a database.
-- **Integration tests** on the user import service, using Testcontainers to
-  spin up a real Postgres instance for the repository layer. This is
-  important specifically for the CSV import flow, since a lot of its
-  correctness (the `ON CONFLICT DO NOTHING` behaviour, for example) only
-  really means anything against a real database.
+  needing a database. This is where most of the import logic is actually
+  tested: batching (500 rows per `saveMany` call), row numbering, sorting
+  failed rows, and the "re-importing the same file produces a conflict"
+  scenario — all against `FakeUserRepository` and `FakeCsvParser`.
+- **Integration tests** on the repository layer, using Testcontainers to spin
+  up a real Postgres instance. This is where the things that only make sense
+  against a real database get verified — most importantly, that
+  `ON CONFLICT DO NOTHING` actually behaves the way the import service
+  assumes it does.
+- The domain model (`User`) has its own unit tests covering its full
+  behaviour — validation, normalization (trimming, lowercasing emails), and
+  the `create()`/`fromData()` factory methods described below.
 
 ```bash
 pnpm test
