@@ -16,12 +16,17 @@ export class User {
   }
 
   static create(data: UserCreateDto): User {
-    this.validate(data);
+    const normalizedData = {
+      username: data.username.trim(),
+      email: data.email.trim().toLowerCase(),
+    };
+
+    this.validate(normalizedData);
 
     return new User({
       id: uuidv7(),
-      username: data.username,
-      email: data.email,
+      username: normalizedData.username,
+      email: normalizedData.email,
       createdAt: new Date(),
     });
   }

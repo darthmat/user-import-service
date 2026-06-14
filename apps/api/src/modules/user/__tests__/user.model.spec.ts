@@ -67,6 +67,26 @@ describe('User', () => {
         'Validation failed: Invalid email format',
       );
     });
+
+    describe('normalization', () => {
+      it('should trim whitespace and lowercase the email address', () => {
+        const createdUser = User.create({
+          username: 'JohnDoe',
+          email: '  jOhN.DoE@DoMaIn.CoM  ',
+        });
+
+        expect(createdUser.email).toBe('john.doe@domain.com');
+      });
+
+      it('should trim whitespace from username', () => {
+        const createdUser = User.create({
+          username: '  ValidUsername  ',
+          email: 'johndoe@example.com',
+        });
+
+        expect(createdUser.username).toBe('ValidUsername');
+      });
+    });
   });
 
   describe('fromData', () => {
