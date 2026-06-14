@@ -1,16 +1,15 @@
 import assert from "assert";
+import { IUserService } from "./user.interface";
 import type { ImportResult, User } from "./user.types";
 
-export interface IUserService {
-  createUser(data: { username: string; email: string }): Promise<User>;
-  importUsers(file: File, delimiter: string): Promise<ImportResult>;
-}
-
 export class UserServiceImpl implements IUserService {
-  constructor(private readonly apiUrl: string) {}
+  constructor(
+    private readonly apiUrl: string,
+    private readonly customFetch = fetch,
+  ) {}
 
   async createUser(data: { username: string; email: string }): Promise<User> {
-    const res = await fetch(`${this.apiUrl}/users`, {
+    const res = await this.customFetch(`${this.apiUrl}/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -32,7 +31,7 @@ export class UserServiceImpl implements IUserService {
     form.append("file", file);
     form.append("delimiter", delimiter);
 
-    const res = await fetch(`${this.apiUrl}/users/import`, {
+    const res = await this.customFetch(`${this.apiUrl}/users/import`, {
       method: "POST",
       body: form,
     });
