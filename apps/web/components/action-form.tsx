@@ -32,14 +32,23 @@ export function ActionForm<T extends ServerActionResult>({
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    const result = (await action(data)) as T;
+    try {
+      const result = (await action(data)) as T;
 
-    if (result.success) {
-      toast.success(result.message);
-      formRef.current?.reset();
-      onSuccess?.(result);
-    } else {
-      result.errors.forEach((error) => toast.error(error));
+      if (result.success) {
+        toast.success(result.message);
+        formRef.current?.reset();
+        onSuccess?.(result);
+      } else {
+        result.errors.forEach((error) => toast.error(error));
+      }
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? ((error.cause as string | undefined) ?? error.message)
+          : "Unexpected error occurred.";
+
+      toast.error(message);
     }
   }
 
