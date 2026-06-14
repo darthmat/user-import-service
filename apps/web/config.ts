@@ -5,7 +5,7 @@ const envSchema = z.object({
 });
 
 export const config = envSchema.parse({
-  apiUrl: process.env.NEXT_PUBLIC_API_URL,
+  apiUrl: process.env.API_URL,
 });
 
 export type Config = z.infer<typeof envSchema>;
