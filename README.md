@@ -201,6 +201,14 @@ duplicates _within the same file_. If the file itself has the same email
 twice, the first one inserts fine and the second one collides with it — same
 `ON CONFLICT DO NOTHING` mechanism catches it, no extra code needed.
 
+There's a related edge case worth mentioning: emails are case-insensitive in
+practice (`John@test.com` and `john@test.com` are the same mailbox), but a
+plain unique constraint on the raw string wouldn't treat them as duplicates.
+`User.create()` trims and lowercases the email (and trims the username)
+before validation, so both rows end up with the same value before they ever
+reach the database — and the same `ON CONFLICT DO NOTHING` path catches it
+like any other duplicate.
+
 **Users need to know exactly which rows failed and why.** Throwing a single
 error for the whole import isn't useful — if 3 out of 1000 rows are bad, the
 user needs a list of those 3, with the actual row numbers as they'd see them
