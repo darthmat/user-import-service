@@ -77,7 +77,7 @@ Once everything is up:
 
 ## Architecture
 
-The API follows a hexagonal-ish layout: `controller` → `port` (abstract
+The API follows a hexagonal layout: `controller` → `port` (abstract
 class used as a DI token) → `service` → `domain model` → `repository`, all wired
 together with NestJS's dependency injection. The point of this isn't
 ceremony for its own sake — it's that every layer can be swapped or tested in
